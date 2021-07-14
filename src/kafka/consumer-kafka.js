@@ -1,14 +1,13 @@
-const Kafka = require('./client-kafka')
+const Kafka = require('./provider-kafka')
 
 module.exports = class TopicConsumer {
-    constructor(consumer) {
-        let kafka = Kafka;
-        this.consumer = kafka.consumer({ groupId: consumer })
+    constructor(groupName) {
+        this.consumer = kafka.consumer({ groupId: groupName })
     }
 
-    async read() {
+    async read(topicName) {
         await this.consumer.connect()
-        await this.consumer.subscribe({ topic: 'lmtracking', fromBeginning: true })
+        await this.consumer.subscribe({ topic: topicName, fromBeginning: true })
         await this.consumer.run({
             eachMessage: async ({ message }) => {
                 console.log({

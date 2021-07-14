@@ -3,7 +3,7 @@ const TopicProducer = require("../kafka/producer-kafka")
 module.exports = class ProductService {
 
     constructor() {
-        this.productIntegration = new TopicProducer('lmtracking');
+        this.productIntegration = new TopicProducer('lmtracking01');
     }
 
     send(product) {

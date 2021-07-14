@@ -1,10 +1,12 @@
-const TopicConsumer = require('./src/kafka/consumer-kafka');
-const mock = require('./src/service/mock');
-const ProductService = require('./src/service/product-service');
+import express from "express"
+import dotenv from "dotenv"
 
-let productService = new ProductService();
+const start = () => {
+  let app = express()
+  dotenv.config()
 
-productService.send(mock);
+  app.listen(process.env.PORT, () => {
+    console.log(`Start Server in ${process.env.PORT}`)
+  })
 
-new TopicConsumer('kafka-client-dev').read()
-
+}

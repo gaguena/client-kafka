@@ -1,18 +1,19 @@
-const Kafka = require('./client-kafka')
+const CustomerOrder = require('../data/customerOrder');
+const dadosMock = require('../data/mock');
+const Kafka = require('./provider-kafka')
 
 module.exports = class TopicProducer {
-    constructor(topic) {
+    constructor (topicName) {
         let kafka = Kafka;
-        this.topic = topic;
+        this.topicName = topicName;
         this.producer = kafka.producer()
     }
     
-    async push(message) {
+    async push (messageData) {
         await this.producer.connect()
-        console.log(`Sending message: ${message}, topic: ${this.topic}`)
         await this.producer.send({
-            topic: this.topic,
-            messages: [{ value: JSON.stringify(message) }]
+            topic: this.topicName,
+            messages: [{ value: JSON.stringify(messageData) }]
         }).then(async () => {
             await this.producer.disconnect()
         })
